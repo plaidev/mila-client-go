@@ -1,0 +1,1519 @@
+openapi: 3.0.1
+info:
+  title: Mila
+  version: 1.0.0
+servers:
+- description: Mila API Server
+  url: /mila
+paths:
+  /v1/cancelJobFlow:
+    post:
+      description: Cancels a running ingestion or synchronization JobFlow identified
+        by its ID
+      operationId: cancelJobFlow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelJobRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelJobResponse'
+          description: default response
+      summary: Cancel a running JobFlow
+  /v1/cancelQuery:
+    post:
+      description: Cancels a running query identified by its query ID
+      operationId: cancelQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelQueryRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelQueryResponse'
+          description: default response
+      summary: Cancel a running query
+  /v1/createColocationGroup:
+    post:
+      description: Creates a new colocation group with the provided name
+      operationId: createColocationGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateColocationGroupRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateColocationGroupResponse'
+          description: default response
+      summary: Create a colocation group
+  /v1/createTable:
+    post:
+      description: Creates a new table with the provided configuration
+      operationId: createTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTableRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTableResponse'
+          description: default response
+      summary: Create a table
+  /v1/deleteColocationGroup:
+    post:
+      description: Deletes a colocation group if no tables belong to it. Set ignoreMissing
+        only for retryable cleanup that should accept an already deleted group.
+      operationId: deleteColocationGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteColocationGroupRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteColocationGroupResponse'
+          description: default response
+      summary: Delete a colocation group
+  /v1/deleteTable:
+    post:
+      description: Removes the specified table and all its associated data
+      operationId: deleteTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteTableRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTableResponse'
+          description: default response
+      summary: Delete a table
+  /v1/getJobStatus:
+    post:
+      description: Returns the current status of a specific job identified by its
+        ID
+      operationId: getJobStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetJobStatusRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetJobStatusResponse'
+          description: default response
+      summary: Get job status
+  /v1/getRunningSyncJobs:
+    post:
+      description: Returns a list of all currently running synchronization jobs for
+        the specified table
+      operationId: getRunningJobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRunningJobsRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRunningJobsResponse'
+          description: default response
+      summary: Get running synchronization jobs
+  /v1/getSyncedInterval:
+    post:
+      description: Returns the time interval for which data has been synchronized
+        for the specified table
+      operationId: syncedInterval
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSyncedIntervalRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSyncedIntervalResponse'
+          description: default response
+      summary: Get synchronized time interval
+  /v1/getTable:
+    post:
+      description: Returns detailed information about a specific table
+      operationId: getTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTableRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTableResponse'
+          description: default response
+      summary: Get table details
+  /v1/getView:
+    post:
+      description: Returns SQL text and column aliases for a view. Column types are
+        late-binding and are not returned; run a SELECT via /v1/runSql to resolve
+        them at query time.
+      operationId: getView
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetViewRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetViewResponse'
+          description: default response
+      summary: Get view details
+  /v1/listTables:
+    post:
+      description: Returns a list of all available tables with their names
+      operationId: listTables
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListTablesRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTablesResponse'
+          description: default response
+      summary: List available tables
+  /v1/registerPubSubPublisher:
+    post:
+      description: Subscribes to a BigQuery dataset and returns the result
+      operationId: registerPubSubPublisher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterPubSubPublisherRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterPubSubPublisherResponse'
+          description: default response
+      summary: Subscribe to a BigQuery dataset
+  /v1/removePubsubPublisher:
+    post:
+      description: Removes a PubSub publisher and returns the result
+      operationId: unregisterPubSubPublisher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnregisterPubSubPublisherRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnregisterPubSubPublisherResponse'
+          description: default response
+      summary: Remove a PubSub publisher
+  /v1/runSql:
+    post:
+      description: Returns query results by default, or a Job when createJob=true
+      operationId: runSql
+      parameters:
+      - description: Comma-separated GRANT principals for this request (for example
+          `alice` or `alice,bob`).
+        in: header
+        name: Mila-Principal
+        schema:
+          type: string
+          example: alice,bob
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunSqlRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunSqlResponse'
+          description: Direct result, EXPLAIN result, or terminal Job
+        '400':
+          description: Bad request - invalid SQL or parameters
+        '500':
+          description: Internal server error during query execution
+      summary: Execute SQL directly or create an asynchronous Job
+  /v1/subscribeBigQueryDataset:
+    post:
+      description: Subscribes to a BigQuery dataset and returns the result
+      operationId: subscribeBigQueryDataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeBigQueryDatasetRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscribeBigQueryDatasetResponse'
+          description: default response
+      summary: Subscribe to a BigQuery dataset
+  /v1/triggerCleanSync:
+    post:
+      description: Initiates a clean synchronization job for the specified table and
+        time interval
+      operationId: cleanSync
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CleanSyncRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CleanSyncResponse'
+          description: default response
+      summary: Trigger clean data synchronization
+  /v1/triggerShardKeyMapMerge:
+    post:
+      description: Initiates a shard key map merge job that applies shard key mappings
+        to the base table
+      operationId: triggerShardKeyMapMerge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriggerShardKeyMapMergeRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerShardKeyMapMergeResponse'
+          description: default response
+      summary: Trigger shard key map merge
+  /v1/triggerSync:
+    post:
+      description: Initiates a synchronization job for the specified table and time
+        interval
+      operationId: triggerSync
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriggerSyncRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerSyncResponse'
+          description: default response
+      summary: Trigger data synchronization
+  /v1/unsubscribeBigQueryDataset:
+    post:
+      description: Unsubscribes from a BigQuery dataset and returns the result
+      operationId: unsubscribeBigQueryDataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnsubscribeBigQueryDatasetRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnsubscribeBigQueryDatasetResponse'
+          description: default response
+      summary: Unsubscribe from a BigQuery dataset
+  /v1/updateColocationGroup:
+    post:
+      description: Partial update of colocation group settings. Only non-null fields
+        are applied. anchorTable can be changed after initial configuration.
+      operationId: updateColocationGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateColocationGroupRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateColocationGroupResponse'
+          description: default response
+      summary: Update colocation group settings
+  /v1/updateTable:
+    post:
+      description: Partial update of table metadata. Only non-null fields are applied.
+        Schema changes are not supported here. shardCount can only be set while the
+        latest snapshot is empty and uninitialized. It is not supported for shardKeyMap
+        tables. shardCount cannot be combined with ttlDays or cachePolicy.
+      operationId: updateTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTableRequest'
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTableResponse'
+          description: default response
+      summary: Update table metadata
+components:
+  schemas:
+    AnnJv1IndexSpec:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/IndexSpec'
+      - type: object
+        properties:
+          alpha:
+            type: number
+            format: float
+          beamWidth:
+            type: integer
+            format: int32
+          clusterCount:
+            type: integer
+            format: int32
+          dimension:
+            type: integer
+            format: int32
+          efConstruction:
+            type: integer
+            format: int32
+          m:
+            type: integer
+            format: int32
+          neighborOverflow:
+            type: number
+            format: float
+          quantize:
+            type: boolean
+          similarity:
+            type: string
+    ArrayToStr:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ColumnExtraction'
+      - type: object
+        properties:
+          delimiter:
+            type: string
+          sourceColumn:
+            type: string
+      required:
+      - delimiter
+      - destinationColumn
+      - sourceColumn
+    AttributePartitionSpec:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PartitionSpec'
+      - type: object
+        properties:
+          initialShard:
+            type: integer
+            format: int32
+            default: 3
+            description: Initial shard number for partitioning
+          keyColumn:
+            type: string
+            description: Column name to use for partitioning
+          type:
+            type: string
+            description: Partition type
+            enum:
+            - attribute
+      description: Configuration for attribute-based partitioning strategy
+      required:
+      - keyColumn
+      - type
+    BigQueryDataSource:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/DataSource'
+      - type: object
+        properties:
+          columnExtractions:
+            type: array
+            items:
+              $ref: '#/components/schemas/ColumnExtraction'
+          sourceTableId:
+            $ref: '#/components/schemas/TableId'
+          suffixShardType:
+            type: string
+            enum:
+            - noShard
+            - dateShard
+      required:
+      - columnExtractions
+      - sourceTableId
+      - suffixShardType
+    BigQuerySharingDataSource:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/DataSource'
+      - type: object
+        properties:
+          columnExtractions:
+            type: array
+            items:
+              $ref: '#/components/schemas/ColumnExtraction'
+          listing:
+            type: string
+          suffixShardType:
+            type: string
+            enum:
+            - noShard
+            - dateShard
+          tableId:
+            type: string
+      required:
+      - columnExtractions
+      - listing
+      - suffixShardType
+      - tableId
+    CancelJobRequest:
+      type: object
+      properties:
+        jobId:
+          type: string
+      required:
+      - jobId
+    CancelJobResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+    CancelQueryRequest:
+      type: object
+      properties:
+        queryId:
+          type: string
+      required:
+      - queryId
+    CancelQueryResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    Chronology:
+      type: object
+      properties:
+        zone:
+          $ref: '#/components/schemas/DateTimeZone'
+    CleanSyncRequest:
+      type: object
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/DataSource'
+        interval:
+          $ref: '#/components/schemas/IntervalOrString'
+        jobId:
+          type: string
+          description: 'Optional caller-supplied job ID. When omitted, the server
+            generates a UUID. Supplying a stable ID lets callers correlate jobs with
+            their own systems and makes retries idempotent: calling triggerCleanSync
+            again with the same jobId returns the existing job without re-queueing.'
+          example: my-system:batch-42
+          nullable: true
+        options:
+          $ref: '#/components/schemas/SyncOptions'
+        tableName:
+          type: string
+        warmUp:
+          type: boolean
+      required:
+      - dataSource
+      - tableName
+    CleanSyncResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+    ColocationGroupConfigWithName:
+      type: object
+      properties:
+        anchorTable:
+          type: string
+        name:
+          type: string
+        replicationNum:
+          type: integer
+          format: int32
+        replicationStrategy:
+          type: string
+          enum:
+          - even
+          - broadcast
+    ColumnExtraction:
+      type: object
+      discriminator:
+        propertyName: type
+      properties:
+        destinationColumn:
+          type: string
+        type:
+          type: string
+      required:
+      - type
+    ColumnSpec:
+      type: object
+      properties:
+        description:
+          type: string
+        dictionaryEncoded:
+          type: boolean
+          writeOnly: true
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnSpec'
+        fixedArrayLength:
+          type: integer
+          format: int32
+        name:
+          type: string
+        nullable:
+          type: boolean
+        stringEncoding:
+          type: string
+          description: String column encoding. Replaces dictionaryEncoded. When both
+            are set, stringEncoding takes precedence.
+          enum:
+          - GLOBAL_DICT
+          - LOCAL_DICT
+          - NONE
+        type:
+          type: string
+          enum:
+          - DOUBLE
+          - FLOAT
+          - BIGINT
+          - STRING
+          - ARRAY
+          - STRUCT
+          - BOOLEAN
+          - INT
+          - DYNAMIC
+          - JSON
+          - TIMESTAMP
+          - COMPLEX
+          - KLL_SKETCH
+          - HLL_SKETCH
+    CreateColocationGroupRequest:
+      type: object
+      properties:
+        anchorTable:
+          type: string
+        colocationGroupName:
+          type: string
+        replicationNum:
+          type: integer
+          format: int32
+        replicationStrategy:
+          type: string
+          enum:
+          - even
+          - broadcast
+      required:
+      - colocationGroupName
+    CreateColocationGroupResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    CreateTableRequest:
+      type: object
+      properties:
+        cachePolicy:
+          $ref: '#/components/schemas/TableCachePolicySpec'
+        colocationGroup:
+          $ref: '#/components/schemas/ColocationGroupConfigWithName'
+        colocationGroupName:
+          type: string
+        description:
+          type: string
+        indexSpecs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndexSpec'
+        name:
+          type: string
+        partitionSpec:
+          $ref: '#/components/schemas/PartitionSpec'
+        primaryKeys:
+          type: array
+          items:
+            type: string
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnSpec'
+        shardCount:
+          type: integer
+          format: int32
+        shardKeyColumn:
+          type: string
+        shardKeyMapConfig:
+          $ref: '#/components/schemas/ShardKeyMapConfig'
+        sortKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortKeySpec'
+        ttlDays:
+          type: integer
+          format: int32
+        tuningConfig:
+          $ref: '#/components/schemas/MilaTableTuningConfig'
+        type:
+          type: string
+          enum:
+          - columnar
+          - attribute
+          - shardKeyMap
+      required:
+      - name
+      - shardKeyColumn
+      - sortKeys
+      - type
+    CreateTableResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    DataSource:
+      type: object
+      discriminator:
+        mapping:
+          bigQuery: '#/components/schemas/BigQueryDataSource'
+          bigQuerySharing: '#/components/schemas/BigQuerySharingDataSource'
+          inline: '#/components/schemas/InlineDataSource'
+          inlineShardKeyMap: '#/components/schemas/InlineShardKeyMapDataSource'
+        propertyName: type
+      properties:
+        type:
+          type: string
+      required:
+      - type
+    DateTimeZone:
+      type: object
+      properties:
+        fixed:
+          type: boolean
+        id:
+          type: string
+    DeleteColocationGroupRequest:
+      type: object
+      properties:
+        colocationGroupName:
+          type: string
+        ignoreMissing:
+          type: boolean
+          description: Accept an already deleted group for retryable cleanup
+      required:
+      - colocationGroupName
+    DeleteColocationGroupResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    DeleteTableRequest:
+      type: object
+      properties:
+        tableName:
+          type: string
+      required:
+      - tableName
+    DeleteTableResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    FixedListPartitionSpec:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PartitionSpec'
+      - type: object
+        properties:
+          intervals:
+            type: array
+            description: List of intervals to use for partitioning
+            items:
+              $ref: '#/components/schemas/Interval'
+          keyColumn:
+            type: string
+            description: Column name to use for partitioning
+          type:
+            type: string
+            description: Partition type
+            enum:
+            - fixedList
+      description: Configuration for fixed interval partitioning strategy
+      required:
+      - intervals
+      - keyColumn
+      - type
+    GetJobStatusRequest:
+      type: object
+      properties:
+        jobId:
+          type: string
+      required:
+      - jobId
+    GetJobStatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+    GetRunningJobsRequest:
+      type: object
+      properties:
+        tableName:
+          type: string
+      required:
+      - tableName
+    GetRunningJobsResponse:
+      type: object
+      properties:
+        jobIds:
+          type: array
+          items:
+            type: string
+    GetSyncedIntervalRequest:
+      type: object
+      properties:
+        tableName:
+          type: string
+      required:
+      - tableName
+    GetSyncedIntervalResponse:
+      type: object
+      properties:
+        interval:
+          $ref: '#/components/schemas/Interval'
+    GetTableRequest:
+      type: object
+      properties:
+        tableName:
+          type: string
+      required:
+      - tableName
+    GetTableResponse:
+      type: object
+      properties:
+        cachePolicy:
+          $ref: '#/components/schemas/TableCachePolicySpec'
+        colocationGroup:
+          $ref: '#/components/schemas/ColocationGroupConfigWithName'
+        description:
+          type: string
+        name:
+          type: string
+        partitionSpec:
+          $ref: '#/components/schemas/PartitionSpec'
+        primaryKeys:
+          type: array
+          items:
+            type: string
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnSpec'
+        shardKeyColumn:
+          type: string
+        shardKeyMapConfig:
+          $ref: '#/components/schemas/ShardKeyMapConfig'
+        sortKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortKeySpec'
+        tableId:
+          type: string
+        tableType:
+          type: string
+          enum:
+          - columnar
+          - attribute
+          - shardKeyMap
+        ttlDays:
+          type: integer
+          format: int32
+        tuningConfig:
+          $ref: '#/components/schemas/MilaTableTuningConfig'
+    GetViewRequest:
+      type: object
+      properties:
+        viewName:
+          type: string
+      required:
+      - viewName
+    GetViewResponse:
+      type: object
+      properties:
+        columnAliases:
+          type: array
+          items:
+            type: string
+        createdAtMillis:
+          type: integer
+          format: int64
+        description:
+          type: string
+        name:
+          type: string
+        sqlText:
+          type: string
+        viewId:
+          type: string
+    IndexSpec:
+      type: object
+      discriminator:
+        propertyName: type
+      properties:
+        column:
+          type: string
+        type:
+          type: string
+      required:
+      - type
+    InlineDataSource:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/DataSource'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              additionalProperties: true
+            maxItems: 100000
+            minItems: 1
+      required:
+      - data
+    InlineShardKeyMapDataSource:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/DataSource'
+      - type: object
+        properties:
+          mappings:
+            type: array
+            items:
+              $ref: '#/components/schemas/KeyMapping'
+      required:
+      - mappings
+    Interval:
+      type: object
+      properties:
+        afterNow:
+          type: boolean
+        beforeNow:
+          type: boolean
+        chronology:
+          $ref: '#/components/schemas/Chronology'
+        end:
+          type: string
+          format: date-time
+        endMillis:
+          type: integer
+          format: int64
+        start:
+          type: string
+          format: date-time
+        startMillis:
+          type: integer
+          format: int64
+    IntervalOrString:
+      type: object
+      deprecated: true
+      description: Deprecated. Use range instead.
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/Interval'
+    JsonObjectColumnExtraction:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ColumnExtraction'
+      - type: object
+        properties:
+          fields:
+            type: array
+            items:
+              $ref: '#/components/schemas/JsonObjectField'
+    JsonObjectField:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonObjectField'
+        name:
+          type: string
+        sourceColumn:
+          type: string
+    JsonTypeColumnExtraction:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ColumnExtraction'
+      - type: object
+        properties:
+          path:
+            type: string
+          sourceColumn:
+            type: string
+    KeyMappabilityRule:
+      type: object
+      discriminator:
+        mapping:
+          mappablePrefixKeys: '#/components/schemas/PrefixKeyMappabilityRule'
+        propertyName: type
+      properties:
+        type:
+          type: string
+      required:
+      - type
+    KeyMapping:
+      type: object
+      properties:
+        destinationKey:
+          type: string
+        sourceKey:
+          type: string
+        timestamp:
+          type: integer
+          format: int64
+    ListTablesRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+    ListTablesResponse:
+      type: object
+      properties:
+        tables:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListTablesResponseRecord'
+    ListTablesResponseRecord:
+      type: object
+      properties:
+        name:
+          type: string
+    MilaTableTuningConfig:
+      type: object
+      properties:
+        idealRowNumPerShard:
+          type: integer
+          format: int32
+        minShardNum:
+          type: integer
+          format: int32
+        replicationNum:
+          type: integer
+          format: int32
+    PartitionSpec:
+      type: object
+      discriminator:
+        mapping:
+          attribute: '#/components/schemas/AttributePartitionSpec'
+          fixedList: '#/components/schemas/FixedListPartitionSpec'
+          shardKeyMap: '#/components/schemas/ShardKeyMapPartitionSpec'
+          standard: '#/components/schemas/StandardPartitionSpec'
+          timeseries: '#/components/schemas/TimeseriesPartitionSpec'
+        propertyName: type
+      properties:
+        type:
+          type: string
+      required:
+      - type
+    PlainColumnExtraction:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ColumnExtraction'
+      - type: object
+        properties:
+          sourceColumn:
+            type: string
+    PlainSortKey:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SortKeySpec'
+      - type: object
+        properties:
+          column:
+            type: string
+    PrefixKeyMappabilityRule:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/KeyMappabilityRule'
+      - type: object
+        properties:
+          prefixes:
+            type: array
+            items:
+              type: string
+    RegisterPubSubPublisherRequest:
+      type: object
+      properties:
+        serviceAccountEmail:
+          type: string
+          description: Service account email to use to stream data to Pub/Sub topic
+          example: example@gserviceaccount.com
+      required:
+      - serviceAccountEmail
+    RegisterPubSubPublisherResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    ResponseColumnSchema:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseColumnSchema'
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - DOUBLE
+          - FLOAT
+          - BIGINT
+          - STRING
+          - ARRAY
+          - STRUCT
+          - BOOLEAN
+          - INT
+          - DYNAMIC
+          - JSON
+          - TIMESTAMP
+          - COMPLEX
+          - KLL_SKETCH
+          - HLL_SKETCH
+    RunSqlRequest:
+      type: object
+      properties:
+        allowMutate:
+          type: boolean
+        allowOptions:
+          type: array
+          description: SET option names the SQL is allowed to set. Omitted means no
+            restriction; empty array means no SET options are allowed. Comparison
+            is case-insensitive. Restricts SQL SET only; request context is not filtered.
+          items:
+            type: string
+        context:
+          type: object
+          additionalProperties: true
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        queryableTables:
+          type: array
+          items:
+            type: string
+        sql:
+          type: string
+    RunSqlResponse:
+      type: object
+      description: Response from SQL query execution
+      properties:
+        queryId:
+          type: string
+          description: Unique identifier for the query
+        rows:
+          type: array
+          description: Result rows as a 2D array, where each inner array represents
+            a row
+          items:
+            type: array
+            description: Result rows as a 2D array, where each inner array represents
+              a row
+            items:
+              type: object
+              description: Result rows as a 2D array, where each inner array represents
+                a row
+        schema:
+          type: array
+          description: The schema of the result columns
+          items:
+            $ref: '#/components/schemas/ResponseColumnSchema'
+      required:
+      - queryId
+      - rows
+      - schema
+    ShardKeyMapConfig:
+      type: object
+      properties:
+        mappingRule:
+          $ref: '#/components/schemas/KeyMappabilityRule'
+    ShardKeyMapPartitionSpec:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PartitionSpec'
+      - type: object
+        properties:
+          type:
+            type: string
+            description: Partition type
+            enum:
+            - shardKeyMap
+      description: Configuration for shard key map partitioning strategy
+      required:
+      - type
+    SortKeySpec:
+      type: object
+      discriminator:
+        propertyName: type
+      properties:
+        type:
+          type: string
+      required:
+      - type
+    StandardPartitionSpec:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PartitionSpec'
+      - type: object
+        properties:
+          keyColumn:
+            type: string
+            description: Column name to use for partitioning
+          type:
+            type: string
+            description: Partition type
+            enum:
+            - standard
+      description: Configuration for standard columnar partitioning strategy
+      required:
+      - keyColumn
+      - type
+    StringJsonColumnExtraction:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ColumnExtraction'
+      - type: object
+        properties:
+          jsonColumn:
+            type: string
+          path:
+            type: string
+    StructTypeColumnExtraction:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ColumnExtraction'
+      - type: object
+        properties:
+          fields:
+            type: array
+            items:
+              type: string
+          structColumnName:
+            type: string
+    SubscribeBigQueryDatasetRequest:
+      type: object
+      properties:
+        listingName:
+          type: string
+          description: The name of the BigQuery listing to subscribe to
+          example: projects/my-project/locations/us/dataExchanges/my-exchange/listings/my-listing
+      required:
+      - listingName
+    SubscribeBigQueryDatasetResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    SyncOptions:
+      type: object
+      properties:
+        removeCyclicMappings:
+          type: boolean
+        useSegmentationOptimizer:
+          type: boolean
+    TableCachePolicySpec:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/TimeseriesTableCachePolicySpec'
+    TableId:
+      type: object
+      properties:
+        dataset:
+          type: string
+        iamresourceName:
+          type: string
+        project:
+          type: string
+        projectId:
+          $ref: '#/components/schemas/TableId'
+        table:
+          type: string
+    TimeBucketSortKey:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SortKeySpec'
+      - type: object
+        properties:
+          column:
+            type: string
+          granularity:
+            type: string
+            description: Time granularity for bucketing
+            enum:
+            - SECOND
+            - MINUTE
+            - FIVE_MINUTE
+            - TEN_MINUTE
+            - FIFTEEN_MINUTE
+            - THIRTY_MINUTE
+            - HOUR
+            - SIX_HOUR
+            - EIGHT_HOUR
+            - DAY
+            - WEEK
+            - MONTH
+            - QUARTER
+            - YEAR
+            - ALL
+            - NONE
+            example: HOUR
+    TimeseriesPartitionSpec:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PartitionSpec'
+      - type: object
+        properties:
+          keyColumn:
+            type: string
+            description: Column name to use for partitioning
+          type:
+            type: string
+            description: Partition type
+            enum:
+            - timeseries
+      description: Configuration for timeseries columnar partitioning strategy
+      required:
+      - keyColumn
+      - type
+    TimeseriesTableCachePolicySpec:
+      type: object
+      properties:
+        partialReadEnabled:
+          type: boolean
+        timeseriesFullReadHours:
+          type: integer
+          format: int32
+        type:
+          type: string
+          enum:
+          - timeseries
+        warmupColumnPaths:
+          type: array
+          items:
+            type: string
+        warmupColumns:
+          type: array
+          items:
+            type: string
+    TriggerShardKeyMapMergeRequest:
+      type: object
+      properties:
+        jobId:
+          type: string
+          description: 'Optional caller-supplied job ID. When omitted, the server
+            generates a UUID. Supplying a stable ID lets callers correlate jobs with
+            their own systems and makes retries idempotent: calling triggerShardKeyMapMerge
+            again with the same jobId returns the existing job without re-queueing.'
+          example: my-system:batch-42
+          nullable: true
+        mapLookbackMillis:
+          type: integer
+          format: int64
+        shardKeyMapTableName:
+          type: string
+        tableName:
+          type: string
+      required:
+      - shardKeyMapTableName
+      - tableName
+    TriggerShardKeyMapMergeResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+    TriggerSyncRequest:
+      type: object
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/DataSource'
+        interval:
+          $ref: '#/components/schemas/IntervalOrString'
+        jobId:
+          type: string
+          description: 'Optional caller-supplied job ID. When omitted, the server
+            generates a UUID. Supplying a stable ID lets callers correlate jobs with
+            their own systems and makes retries idempotent: calling triggerSync again
+            with the same jobId returns the existing job without re-queueing.'
+          example: my-system:batch-42
+          nullable: true
+        options:
+          $ref: '#/components/schemas/SyncOptions'
+        priority:
+          type: string
+          enum:
+          - high
+          - mid
+          - low
+        range:
+          type: object
+          additionalProperties:
+            type: object
+            description: Range object with start and end fields. The type of start/end
+              values should match the table's shardKey type.
+            example:
+              end: 1704153600000
+              start: 1704067200000
+          description: Range object with start and end fields. The type of start/end
+            values should match the table's shardKey type.
+          example:
+            end: 1704153600000
+            start: 1704067200000
+        tableName:
+          type: string
+      required:
+      - dataSource
+      - tableName
+    TriggerSyncResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+    UnregisterPubSubPublisherRequest:
+      type: object
+      properties:
+        serviceAccountEmail:
+          type: string
+          description: Service account email which you want to remove from Pub/Sub
+            publisher
+          example: example@gserviceaccount.com
+      required:
+      - serviceAccountEmail
+    UnregisterPubSubPublisherResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    UnsubscribeBigQueryDatasetRequest:
+      type: object
+      properties:
+        listingName:
+          type: string
+          description: The name of the BigQuery listing to unsubscribe from
+          example: projects/my-project/locations/us/dataExchanges/my-exchange/listings/my-listing
+      required:
+      - listingName
+    UnsubscribeBigQueryDatasetResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    UpdateColocationGroupRequest:
+      type: object
+      properties:
+        anchorTable:
+          type: string
+        colocationGroupName:
+          type: string
+        replicationNum:
+          type: integer
+          format: int32
+        replicationStrategy:
+          type: string
+          enum:
+          - even
+          - broadcast
+      required:
+      - colocationGroupName
+    UpdateColocationGroupResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    UpdateTableRequest:
+      type: object
+      properties:
+        cachePolicy:
+          $ref: '#/components/schemas/TableCachePolicySpec'
+        name:
+          type: string
+        shardCount:
+          type: integer
+          format: int32
+          maximum: 4096
+          minimum: 1
+        ttlDays:
+          type: integer
+          format: int32
+      required:
+      - name
+    UpdateTableResponse:
+      type: object
+      properties:
+        result:
+          type: string
