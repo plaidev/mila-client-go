@@ -25,6 +25,9 @@ func assertJSON(t *testing.T, value any, want string) {
 }
 
 func TestOptionalFields(t *testing.T) {
+	// 未指定はクラスタ設定に従い、false の明示指定は旧実装を選ぶ。
+	assertJSON(t, SyncOptions{}, `{}`)
+	assertJSON(t, SyncOptions{UseBatchedShardKeyMapSync: Ptr(false)}, `{"useBatchedShardKeyMapSync":false}`)
 	assertJSON(t, RunSQLRequest{SQL: "SELECT 1"}, `{"sql":"SELECT 1"}`)
 	assertJSON(t, RunSQLRequest{SQL: "SELECT 1", AllowOptions: []string{}, QueryableTables: []string{}, AllowMutate: Ptr(false)},
 		`{"sql":"SELECT 1","allowOptions":[],"queryableTables":[],"allowMutate":false}`)

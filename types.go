@@ -161,8 +161,9 @@ type KeyMapping struct {
 }
 
 type SyncOptions struct {
-	RemoveCyclicMappings     *bool `json:"removeCyclicMappings,omitempty"`
-	UseSegmentationOptimizer *bool `json:"useSegmentationOptimizer,omitempty"`
+	RemoveCyclicMappings      *bool `json:"removeCyclicMappings,omitempty"`
+	UseBatchedShardKeyMapSync *bool `json:"useBatchedShardKeyMapSync,omitempty"`
+	UseSegmentationOptimizer  *bool `json:"useSegmentationOptimizer,omitempty"`
 }
 
 // Range の Start/End には shardKey に対応する数値または文字列を指定する。

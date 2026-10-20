@@ -26,7 +26,7 @@ require github.com/plaidev/mila-client-go v0.0.0
 replace github.com/plaidev/mila-client-go => /path/to/mila/mila-client-go
 ```
 
-この repository は配布用のミラーです。開発元の Mila モノレポジトリで `mila-client-go/v0.1.0` のようなタグを付けると、CI がクライアントだけを同期し、この repository に `v0.1.0` タグを作成します。既存の TypeScript client とは独立してバージョンを管理します。
+この repository は配布用のミラーです。開発元の Mila モノレポジトリで `mila-client-go/VERSION` を公開したいバージョン（例: `v0.1.1`）に更新し、master にマージすると、CI がクライアントだけを同期して、この repository の `main` と同名のタグを更新します。VERSION を変更しない PR ではリリースしないため、複数 PR の変更をまとめて公開できます。手動のタグ作成は不要で、既存の TypeScript client とは独立してバージョンを管理します。
 
 ## SQL を実行する
 
